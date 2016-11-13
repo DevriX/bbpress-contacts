@@ -1,0 +1,86 @@
+.bbpc-btn {
+    padding: 7px 15px;
+    border-radius: 3px;
+    -webkit-border-radius: 3px;
+    display: inline-block;
+    margin-top: 5px;
+    color: #fff;
+    cursor: pointer;
+}
+a.bbpc-btn, 
+a.bbpc-btn:hover,
+a.bbpc-btn:active {
+    color: #fff !important;
+    text-decoration: none;
+}
+.bbpc-btn.bbpc-add {
+    background: #4CAF50;
+}
+.bbpc-btn.bbpc-remove {
+    background: #F44336;
+}
+.bbpc-btn i {
+    margin-right: 2px;
+}
+.bbpc-btn.loading {
+    opacity: 0.8;
+    -webkit-opacity: 0.8;
+    -moz-opacity: 0.8;
+    -ms-opacity: 0.8;
+    -o-opacity: 0.8;
+}
+.bbpc-btn.loading {
+    cursor: no-drop;
+}
+.bbpc-btn:before {
+    content: attr(data-before);
+    font-style: normal;
+    font-weight: normal;
+    speak: none; 
+    display: inline-block;
+    text-decoration: inherit;
+    width: 1em;
+    margin-right: .2em;
+    text-align: center;
+    font-variant: normal;
+    text-transform: none;
+    line-height: 1em;
+    margin-right: .4em; 
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    font-size: 120%;
+}
+.bbp-contacts li {
+    display: inline-block;
+    text-align: center;
+    margin-right: .7em !important;
+}
+.bbp-contacts form {
+    display: block;
+    overflow: hidden;
+}
+.bbp-contacts form input {}
+.bbp-contacts li .rem {
+    color: #F44336;
+    cursor: pointer;
+}
+.bbp-contacts .pagination {
+    display: block !important;
+    margin-top: .5em;
+    text-align: right;
+}
+.bbp-contacts .pagination a,
+.bbp-contacts .pagination span {
+    display: inline-block !important;
+    border: 1px solid #ddd;
+    padding: 0 7px;
+    cursor: pointer;
+    margin-right: 2px;
+    border-radius: 2px;
+    color: #555;
+}
+.bbp-contacts .pagination span {
+    border: 0;
+    text-decoration: underline;
+    cursor: default;
+}
