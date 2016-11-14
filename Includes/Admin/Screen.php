@@ -3,8 +3,6 @@
 // prevent direct access
 defined('ABSPATH') || exit('No direct access allowed' . PHP_EOL);
 
-use BM\Includes\Core as Core;
-
 class Screen
 {
     
@@ -52,7 +50,7 @@ class Screen
                 Loader::uiResponse( array( "success" => false, "message" => "Error occured: Bad authentication." ) );
             } else {
 
-                if ( !empty( (int) $_POST['pagi'] ) ) {
+                if ( isset($_POST['pagi']) && !empty( $_POST['pagi'] ) ) {
                     update_option( "bbpc_settings_perpage", (int) $_POST['pagi'] );
                     $pagi = (int) $_POST['pagi'];
                 } else {
