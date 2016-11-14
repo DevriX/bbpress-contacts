@@ -1,7 +1,7 @@
 === bbP Contacts ===
 Contributors: elhardoum
 Tags: bbpress, bookmarks, users, members, contacts, contact, ajax, settings, translation-ready, search, forums
-Requires at least: 3.0.1
+Requires at least: PHP 5.3, WP 3.0.1
 Tested up to: 4.6.1
 Stable tag: 0.1
 License: GPLv2 or later
