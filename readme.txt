@@ -3,7 +3,7 @@ Contributors: elhardoum
 Tags: bbpress, bookmarks, users, members, contacts, contact, ajax, settings, translation-ready, search, forums
 Requires at least: PHP 5.3, WP 3.0.1
 Tested up to: 4.6.1
-Stable tag: 0.1
+Stable tag: 0.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 Author URI: https://samelh.com/
