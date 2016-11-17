@@ -4,7 +4,7 @@ Plugin Name:    bbPress Contacts
 Plugin URI:     https://samelh.com/wordpress-plugins/
 Description:    bbPress Contacts Tool
 Author:         Samuel Elh
-Version:        0.1
+Version:        0.2
 Author URI:     https://samelh.com
 */
 
@@ -30,7 +30,7 @@ require BBPC_INC_PATH . "Core/Loader.php";
   * Class instance $BBPC_Loader
   * this var is accessible in the theme functions
   * can be used to remove actions, filter and much
-  * more
+  * more. You can globalize it also..
   */
 
 $BBPC_Loader = new BBPC\Includes\Core\Loader;

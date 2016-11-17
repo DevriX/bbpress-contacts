@@ -28,20 +28,40 @@ Class Loader
     public static function ajaxCallback()
     {
         if ( !isset( $_REQUEST['bbpc_nonce'] ) || !wp_verify_nonce( $_REQUEST['bbpc_nonce'], 'bbpc_nonce' ) ) {
-            wp_send_json( array("success"=>false, "message"=>"Bad authentication") );
+            wp_send_json(
+                apply_filters(
+                    "bbpc_wp_send_json_args",
+                    array("success"=>false, "message"=>"Bad authentication")
+                )
+            );
         }
 
         if ( empty( $_REQUEST['contact_ID'] ) ) {
-            wp_send_json( array("success"=>false, "message"=>"No contact specified or invalid user") );
+            wp_send_json(
+                apply_filters(
+                    "bbpc_wp_send_json_args",
+                    array("success"=>false, "message"=>"No contact specified or invalid user")
+                )
+            );
         } else {
             $contact = get_user_by('ID', $_REQUEST['contact_ID']);
             if ( !$contact->ID ) {
-                wp_send_json( array("success"=>false, "message"=>"No contact specified or invalid user") );
+                wp_send_json(
+                    apply_filters(
+                        "bbpc_wp_send_json_args",
+                        array("success"=>false, "message"=>"No contact specified or invalid user")
+                    )
+                );
             }
         }
 
         if ( !isset( $_REQUEST['task'] ) ) {
-            wp_send_json( array("success"=>false, "message"=>"No task specified") );
+            wp_send_json(
+                apply_filters(
+                    "bbpc_wp_send_json_args",
+                    array("success"=>false, "message"=>"No task specified")
+                )
+            );
         } else {
             $task = esc_attr( strtolower( $_REQUEST['task'] ) );
 
@@ -52,11 +72,21 @@ Class Loader
             }
 
             if ( !$done ) {
-                wp_send_json( array("success"=>false, "message"=>"Error occured while adding or removing this contact") );
+                wp_send_json(
+                    apply_filters(
+                        "bbpc_wp_send_json_args",
+                        array("success"=>false, "message"=>"Error occured while adding or removing this contact")
+                    )
+                );
             } else {
                 ob_start();
                 self::parseButton( $contact->ID );
-                wp_send_json( array("success"=>true, "button"=> ob_get_clean()) );
+                wp_send_json(
+                    apply_filters(
+                        "bbpc_wp_send_json_args",
+                        array("success"=>true, "button"=> ob_get_clean())
+                    )
+                );
             }
         }
         // end response
@@ -109,6 +139,9 @@ Class Loader
         if ( !$this_user ) return;
         // contacts
         $contacts = self::getUserContactsRaw( $this_user );
+        if ( !apply_filters( "bbpc_addContact_pass", true, $contacts, $contact_ID, $this_user ) ) {
+            return;
+        }
         // push contact
         if ( !in_array($contact_ID, $contacts) ) {
             $contacts[] = $contact_ID;
@@ -128,6 +161,10 @@ Class Loader
         if ( !$this_user ) return;
         // get contacts list
         $contacts = self::getUserContactsRaw( $this_user );
+
+        if ( !apply_filters( "bbpc_removeContact_pass", true, $contacts, $contact_ID, $this_user ) ) {
+            return;
+        }
 
         if ( $contacts ) {
             if ( !in_array($contact_ID, $contacts) ) {
@@ -264,19 +301,20 @@ Class Loader
                 $done = self::addContact( $contact_ID, $current_user );
             }
 
-            // fire hook
-            do_action(
-                "bbpc_noajax_task_done",
-                array(
-                    'task' => isset($remove) ? 'remove' : 'add',
-                    'contact_ID' => $contact_ID,
-                    'current_user' => $current_user,
-                    'task_done' => (bool) $done
-                )
+            $taskArgs = array(
+                'task' => isset($remove) ? 'remove' : 'add',
+                'contact_ID' => $contact_ID,
+                'current_user' => $current_user,
+                'task_done' => (bool) $done
             );
+
+            // fire hook
+            do_action( "bbpc_noajax_task_done", $taskArgs );
             // redirect to strip params
-            if ( apply_filters( "bbpc_noajax_task_done_redirect", true ) ) {
-                wp_redirect( self::removeParams( $_SERVER['REQUEST_URI'] ) );
+            $redir = apply_filters( "bbpc_noajax_task_done_redirect", self::removeParams( $_SERVER['REQUEST_URI'] ), $taskArgs );
+            // redirect
+            if ( trim( $redir ) ) {
+                wp_redirect( esc_url( $redir ) );
                 exit;
             }
         }

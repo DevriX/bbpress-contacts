@@ -56,5 +56,9 @@ More docs coming soon.
 
 == Changelog ==
 
+= 0.2 =
+* Included more hooks, to make it easy to extend the plugin
+* Minor fixes and improvements
+
 = 0.1 =
 * Initial release.
